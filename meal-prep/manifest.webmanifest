@@ -1,14 +1,15 @@
 {
-  "id": "./?app=meal-prep-75",
+  "id": "meal-prep-75-v2",
   "name": "Meal Prep 75",
   "short_name": "Meal Prep 75",
-  "start_url": "./?app=meal-prep-75",
+  "start_url": "./?meal-prep=75-v2",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "window-controls-overlay"],
   "background_color": "#f6f4ee",
   "theme_color": "#f6f4ee",
   "lang": "it",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "./mealprep-icon.svg",
