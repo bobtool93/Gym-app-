@@ -98,40 +98,45 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 <script>
 const KEY='gymapp2_state';
 const defaultPlans=[
-{id:'d1',name:'Giorno 1 — Muscle Up & Trazione',focus:'Skill + dorsali + bicipiti',exercises:[
-{id:'negative-mu',name:'Negative Muscle Up',sets:3,reps:'3–5',rir:'2',type:'skill'},
-{id:'bar-dips',name:'Straight Bar Dips',sets:3,reps:'8–10',rir:'1–2',type:'strength'},
-{id:'transition',name:'Transition Drill',sets:3,reps:'5–8',rir:'2',type:'skill'},
-{id:'weighted-pullup',name:'Pull-up zavorrati',sets:4,reps:'5–8',rir:'1–2',load:12.5,type:'strength'},
-{id:'explosive-pullup',name:'Pull-up esplosivi / Chest-to-Bar',sets:3,reps:'3–4',rir:'2–3',type:'power'},
-{id:'curl-cable',name:'Curl ai cavi',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'}]},
-{id:'d2',name:'Giorno 2 — Front Lever & Trazione',focus:'Dorsali + schiena alta + core',exercises:[
-{id:'fl-hold',name:'Front Lever Progression',sets:5,reps:'10–15s',rir:'',type:'skill'},
-{id:'fl-raise',name:'Front Lever Raises',sets:3,reps:'5',rir:'2',type:'skill'},
-{id:'australian',name:'Australian Pull-up piedi rialzati',sets:4,reps:'8–10',rir:'1–2',type:'hypertrophy'},
-{id:'incline-chest',name:'Inclined Chest Press',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'face-pull',name:'Face Pull',sets:3,reps:'12–15',rir:'2',type:'accessory'},
-{id:'anti-extension',name:'Core anti-extension',sets:3,reps:'15–20s',rir:'',type:'core'}]},
-{id:'d3',name:'Giorno 3 — Hypertrophy Upper',focus:'Dorso + braccia + spalle',exercises:[
-{id:'lat-pulldown',name:'Lat Machine presa neutra',sets:4,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'chest-row',name:'Chest Supported Row',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'shoulder-press',name:'Shoulder Press macchina',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'lateral',name:'Alzate laterali ai cavi',sets:3,reps:'12–15',rir:'1–2',type:'hypertrophy'},
-{id:'incline-curl',name:'Curl inclinato',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'triceps',name:'Pushdown corda',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},
-{id:'d4',name:'Giorno 4 — Opzionale Skill & Weak Point',focus:'Tecnica + punti carenti',exercises:[
-{id:'muscleup',name:'Muscle-up tecnico',sets:4,reps:'1–3',rir:'3',type:'skill'},
-{id:'pullup-volume',name:'Pull-up controllo',sets:3,reps:'6–10',rir:'2',type:'strength'},
-{id:'rear-delt',name:'Rear Delt Fly',sets:3,reps:'12–15',rir:'2',type:'accessory'},
-{id:'hammer',name:'Hammer Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'}]}
-];
-const skills=[['Muscle-up','False grip / transizione','Negative controllate','Chest-to-bar','Singole assistite','Singole libere'],['Front lever','Tuck','Advanced tuck','One leg','Straddle','Full'],['Dragon flag','Tuck','Negative','One leg','Full'],['Verticale','Wall hold','Tuck kick-up','Free hold','Press prep']];
+{id:'mon-on',day:'LUN',mode:'ON',name:'A ON — Planche + Spinta + Gambe',focus:'Planche + spinta + gambe',exercises:[
+{id:'planche-hold',name:'Planche Hold / Progressione',sets:5,reps:'6–12s',rir:'',type:'skill'},
+{id:'planche-lean-pushup',name:'Planche Lean Push-up',sets:3,reps:'6–10',rir:'2',type:'strength'},
+{id:'weighted-dip',name:'Dip zavorrati',sets:4,reps:'5–8',rir:'1–2',type:'strength'},
+{id:'inclined-chest-press',name:'Inclined Chest Press',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
+{id:'hack-squat-a',name:'Hack Squat',sets:3,reps:'6–10',rir:'1–2',type:'strength'},
+{id:'cable-triceps-a',name:'Tricipiti ai cavi',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},
+{id:'tue-off',day:'MAR',mode:'OFF',name:'OFF — Front Lever tecnico + Mobilità',focus:'Tecnica front lever + mobilità',exercises:[
+{id:'fl-easy',name:'Front Lever facile',sets:3,reps:'5–8s',rir:'',type:'skill'},
+{id:'fl-scap-pull',name:'Scapular Front Lever Pulls',sets:2,reps:'4–6',rir:'',type:'skill'},
+{id:'mob-shoulder-chest',name:'Mobilità spalle + torace',sets:1,reps:'5–7 min',rir:'',type:'mobility'}]},
+{id:'wed-on',day:'MER',mode:'ON',name:'B ON — Front Lever + Tirata + Bicipiti',focus:'Front lever + dorsali + schiena + bicipiti',exercises:[
+{id:'fl-progression',name:'Front Lever Progression',sets:5,reps:'6–12s',rir:'',type:'skill'},
+{id:'fl-raises',name:'Front Lever Raises',sets:3,reps:'3–6',rir:'2',type:'skill'},
+{id:'ice-cream-maker',name:'Ice Cream Maker',sets:3,reps:'5–8',rir:'2',type:'skill'},
+{id:'weighted-pullup-b',name:'Trazioni zavorrate',sets:4,reps:'5–8',rir:'1–2',load:12.5,type:'strength'},
+{id:'tbar-row',name:'T-Bar Row',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
+{id:'ez-curl',name:'Curl EZ',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
+{id:'ring-bench-curl',name:'Curl agli anelli / panca',sets:2,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},
+{id:'thu-off',day:'GIO',mode:'OFF',name:'OFF — Planche tecnica + Mobilità',focus:'Tecnica planche + mobilità',exercises:[
+{id:'planche-prog',name:'Planche Progression Hold',sets:3,reps:'6–10s',rir:'',type:'skill'},
+{id:'planche-lean',name:'Planche Lean',sets:2,reps:'15–20s',rir:'',type:'skill'},
+{id:'scap-protraction',name:'Scapular Protraction',sets:2,reps:'10',rir:'',type:'mobility'},
+{id:'mob-shoulder-wrist',name:'Mobilità spalle + polsi',sets:1,reps:'8–10 min',rir:'',type:'mobility'}]},
+{id:'fri-on',day:'VEN',mode:'ON',name:'C ON — Handstand + Gambe + Braccia',focus:'Handstand + gambe + braccia',exercises:[
+{id:'frog-handstand',name:'Frog-to-Handstand',sets:6,reps:'1–3 tentativi',rir:'3',type:'skill'},
+{id:'handstand',name:'Handstand',sets:3,reps:'20–40s',rir:'',type:'skill'},
+{id:'hspu-wall',name:'HSPU pancia al muro',sets:3,reps:'4–8',rir:'2',type:'strength'},
+{id:'hack-squat-c',name:'Hack Squat',sets:3,reps:'6–10',rir:'1–2',type:'strength'},
+{id:'leg-curl',name:'Leg Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
+{id:'curl-c',name:'Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
+{id:'cable-triceps-c',name:'Tricipiti ai cavi',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]}
+];const skills=[['Muscle-up','False grip / transizione','Negative controllate','Chest-to-bar','Singole assistite','Singole libere'],['Front lever','Tuck','Advanced tuck','One leg','Straddle','Full'],['Dragon flag','Tuck','Negative','One leg','Full'],['Verticale','Wall hold','Tuck kick-up','Free hold','Press prep']];
 const mobilityPre=['Circonduzioni spalle 2×10','Scapular pull-up 2×8','Skin the cat controllato 2×5','Hollow body 2×20s','Squat pry 60s'];
 const mobilityOff=['Cat-cow 2×10','Rotazioni toraciche 2×8/lato','90/90 hip switches 2×10','Couch stretch 60s/lato','Dead hang 2×30s','Respirazione nasale 3 min'];
 
 let state=load(); let activePlan=0; let activeSession=null; let timerInt=null; let timerSec=90;
 
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.plans&&s.planVersion===2)return s;return {plans:defaultPlans,planVersion:2,logs:s?.logs||[],weights:s?.weights?.length?s.weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:s?.settings||{name:'Bob'}}}catch(e){return {plans:defaultPlans,planVersion:2,logs:[],weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:{name:'Bob'}}}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.plans&&s.planVersion===3)return s;return {plans:defaultPlans,planVersion:3,logs:s?.logs||[],weights:s?.weights?.length?s.weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:s?.settings||{name:'Bob'}}}catch(e){return {plans:defaultPlans,planVersion:3,logs:[],weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:{name:'Bob'}}}}
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
