@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0b0d10">
 <meta name="description" content="Gym App 2.0 - workout tracker, progressione, calisthenics e mobilità">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Gym App 2.0</title>
+<title>Gym App 2.0 • v5</title>
 <style>
 :root{--bg:#090b0f;--panel:#11151b;--panel2:#171c24;--line:#252c36;--text:#f4f7fb;--muted:#929baa;--accent:#7c5cff;--accent2:#9b86ff;--ok:#35d07f;--warn:#ffbf55;--danger:#ff5c69;--radius:18px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -38,7 +38,10 @@ label.field{display:grid;gap:6px;font-size:12px;color:var(--muted);font-weight:7
 .kpi{font-size:30px;font-weight:900}.good{color:var(--ok)}.warning{color:var(--warn)}
 hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 @media(min-width:700px){body{padding-bottom:20px}.tabs{position:sticky;top:0;bottom:auto;margin:0 auto 18px;max-width:760px;border:1px solid var(--line);border-radius:16px;padding:6px}.app{padding-bottom:20px}}
+
+.file-import{border:1px dashed #3a315e;background:#151229;border-radius:14px;padding:12px}.file-import b{display:block;margin-bottom:4px}.file-import input{display:none}.file-import .file-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:8px}.import-preview{display:grid;gap:8px}.import-preview .preview-row{padding:10px;background:var(--panel2);border-radius:12px}.import-preview .preview-row b{display:block}.import-preview .preview-row span{font-size:12px;color:var(--muted)}
 </style>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -53,7 +56,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 <section id="workout" class="section"><div class="row between"><div><div class="eyebrow">Sessione</div><div class="title" id="workoutTitle">Allenamento</div></div><button onclick="finishWorkout()">✓ Fine</button></div><div class="card"><div class="row between"><span class="muted" id="sessionMeta"></span><button onclick="startTimer(90)">⏱ Recupero</button></div><div class="progress" style="margin-top:12px"><i id="sessionProgress" style="width:0%"></i></div></div><div id="workoutList" class="list"></div></section>
 <section id="plans" class="section"><div class="row between"><div><div class="eyebrow">Programma</div><div class="title">Le tue schede</div></div><button onclick="openAddExercise()">＋ Esercizio</button></div><div id="plansList"></div><div class="card"><h3>Settimana</h3><div class="grid2"><div class="stat"><span>DAY ON</span><b>3</b><span>Lun • Mer • Ven</span></div><div class="stat"><span>DAY OFF</span><b>2</b><span>Mar • Gio</span></div></div><p class="muted small" style="margin-bottom:0">Sabato e domenica: riposo. Handstand solo nel DAY ON di venerdì. Muscle-up escluso dalla scheda.</p></div><div class="card"><h3>Principi di progressione</h3><p class="muted small">Doppia progressione: completa il range alto con tecnica pulita e RIR target, poi aumenta il carico. Per skill e tirate esplosive usa qualità e controllo, non cedimento.</p></div></section>
 <section id="progress" class="section"><div class="title">Progressi</div><div class="grid2"><div class="stat"><span>Volume totale</span><b id="volume">0 kg</b></div><div class="stat"><span>Sessioni questo mese</span><b id="monthSessions">0</b></div></div><div class="card"><div class="row between"><h3 style="margin:0">PR recenti</h3><span class="chip" id="prCount">0</span></div><div id="prList" class="list" style="margin-top:10px"></div></div><div class="card"><h3>Storico esercizi</h3><select id="historyExercise" onchange="renderHistory()"></select><canvas id="historyChart" class="chart" style="margin-top:10px"></canvas><div id="historyText" class="muted small" style="margin-top:10px"></div></div></section>
-<section id="more" class="section"><div class="title">Altro</div><div class="card"><div class="row between"><div><h3>🤸 Skill calisthenics</h3><div class="muted small">Muscle-up, front lever, dragon flag, verticale</div></div><button onclick="openSkills()">Apri</button></div></div><div class="card"><div class="row between"><div><h3>🧘 Mobilità</h3><div class="muted small">Pre-workout e day-off</div></div><button onclick="openMobility()">Apri</button></div></div><div class="card"><h3>Dati</h3><div class="actions"><button onclick="exportData()">Esporta backup</button><button onclick="document.getElementById('importFile').click()">Importa backup</button><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)"></div></div><div class="card"><h3>Installazione</h3><p class="muted small">Questa è una PWA: dal browser puoi aggiungerla alla schermata Home. I dati restano sul dispositivo.</p></div></section>
+<section id="more" class="section"><div class="title">Altro</div><div class="card"><div class="row between"><div><h3>🤸 Skill calisthenics</h3><div class="muted small">Muscle-up, front lever, dragon flag, verticale</div></div><button onclick="openSkills()">Apri</button></div></div><div class="card"><div class="row between"><div><h3>🧘 Mobilità</h3><div class="muted small">Pre-workout e day-off</div></div><button onclick="openMobility()">Apri</button></div></div><div class="card"><h3>Dati</h3><div class="actions"><button onclick="exportData()">Esporta backup</button><button onclick="document.getElementById('importFile').click()">Importa backup</button><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)"></div><div class="file-import" style="margin-top:12px"><b>📊 Importa scheda Excel / Fogli</b><span class="muted small">Carica .xlsx, .xls o .csv. L'app legge le colonne della scheda e le trasforma automaticamente in DAY ON / DAY OFF, esercizi, serie, reps, RIR e carichi.</span><label class="primary file-btn" for="excelFile">Scegli file</label><input id="excelFile" type="file" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" onchange="importExcel(event)"></div></div><div class="card"><h3>Installazione</h3><p class="muted small">Questa è una PWA: dal browser puoi aggiungerla alla schermata Home. I dati restano sul dispositivo.</p></div></section>
 </main></div>
 <nav class="tabs"><button class="tab active" data-section="home" onclick="showSection('home')"><span class="ico">⌂</span>Oggi</button><button class="tab" data-section="workout" onclick="showSection('workout')"><span class="ico">🏋️</span>Workout</button><button class="tab" data-section="plans" onclick="showSection('plans')"><span class="ico">☷</span>Schede</button><button class="tab" data-section="progress" onclick="showSection('progress')"><span class="ico">↗</span>Progressi</button><button class="tab" data-section="more" onclick="showSection('more')"><span class="ico">•••</span>Altro</button></nav>
 <div id="modal" class="modal" onclick="if(event.target.id==='modal')closeModal()"><div class="sheet" id="sheet"></div></div>
@@ -104,10 +107,68 @@ function startTimer(sec=90){timerSec=sec;document.getElementById('timer').classL
 function tickTimer(){document.getElementById('timerValue').textContent=Math.floor(timerSec/60).toString().padStart(2,'0')+':'+(timerSec%60).toString().padStart(2,'0');if(timerSec<=0){clearInterval(timerInt);navigator.vibrate?.([250,100,250]);toast('Recupero terminato');return}timerSec--}
 function addTimer(n){timerSec+=n;tickTimer()}
 function stopTimer(){clearInterval(timerInt);document.getElementById('timer').classList.remove('show')}
+
+function normalizeHeader(v){return String(v??'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'')}
+function pickField(row,aliases){const keys=Object.keys(row);const norm=Object.fromEntries(keys.map(k=>[normalizeHeader(k),k]));for(const a of aliases){const k=norm[normalizeHeader(a)];if(k!==undefined)return row[k]}return ''}
+function modeFrom(v){const s=String(v??'').trim().toUpperCase();if(s.includes('OFF'))return'OFF';if(s.includes('ON'))return'ON';return''}
+function parseExerciseRows(rows,sheetName){
+  const clean=rows.filter(r=>Object.values(r).some(v=>String(v??'').trim()!==''));
+  if(!clean.length)return[];
+  const aliases={day:['giorno','day','giorni'],mode:['modalita','mode','tipo giorno','tipo'],plan:['scheda','programma','plan','nome scheda','workout'],focus:['focus','obiettivo','focus allenamento'],exercise:['esercizio','exercise','movimento','nome esercizio'],sets:['serie','sets','set'],reps:['reps','ripetizioni','ripetizioni range','range'],rir:['rir'],load:['carico','kg','peso','load'],type:['tipo esercizio','categoria','type','category']};
+  const first=clean[0];
+  const hasExercise=Object.keys(first).some(k=>aliases.exercise.some(a=>normalizeHeader(k)===normalizeHeader(a)));
+  let source=clean;
+  if(!hasExercise){
+    const keys=Object.keys(first);
+    const firstKey=keys[0];
+    source=clean.map(r=>({...r,esercizio:r[firstKey]}));
+  }
+  const groups=new Map();
+  source.forEach((r,idx)=>{
+    const ex=String(pickField(r,aliases.exercise)||'').trim();
+    if(!ex)return;
+    const day=String(pickField(r,aliases.day)||sheetName||('GIORNO '+(idx+1))).trim();
+    const mode=modeFrom(pickField(r,aliases.mode)) || (String(day).toUpperCase().includes('OFF')?'OFF':'ON');
+    const plan=String(pickField(r,aliases.plan)||sheetName||('Scheda '+day)).trim();
+    const key=day+'|'+mode+'|'+plan;
+    if(!groups.has(key))groups.set(key,{day,mode,name:plan,focus:String(pickField(r,aliases.focus)||'Importata da Excel').trim(),exercises:[]});
+    const g=groups.get(key);
+    const sets=Math.max(1,Number(pickField(r,aliases.sets))||3);
+    const reps=String(pickField(r,aliases.reps)||'').trim()||'8–12';
+    const rir=String(pickField(r,aliases.rir)||'').trim();
+    const load=Number(String(pickField(r,aliases.load)||'').replace(',','.'))||0;
+    const type=String(pickField(r,aliases.type)||'hypertrophy').trim().toLowerCase()||'hypertrophy';
+    g.exercises.push({id:uid(),name:ex,sets,reps,rir,load,type});
+  });
+  return [...groups.values()].map((g,i)=>({...g,id:'import-'+Date.now().toString(36)+'-'+i}));
+}
+async function importExcel(ev){
+  const file=ev.target.files?.[0]; if(!file)return;
+  if(typeof XLSX==='undefined'){toast('Lettore Excel non disponibile');return}
+  try{
+    const data=await file.arrayBuffer();
+    const wb=XLSX.read(data,{type:'array',cellDates:true});
+    const imported=[];
+    wb.SheetNames.forEach(name=>{
+      const ws=wb.Sheets[name];
+      const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+      imported.push(...parseExerciseRows(rows,name));
+    });
+    if(!imported.length){toast('Nessun esercizio riconosciuto');return}
+    const on=imported.filter(p=>p.mode!=='OFF').length, off=imported.filter(p=>p.mode==='OFF').length, ex=imported.reduce((n,p)=>n+p.exercises.length,0);
+    const preview=imported.map(p=>'<div class="preview-row"><b>'+esc(p.name)+'</b><span>'+esc(p.day)+' • '+esc(p.mode)+' • '+p.exercises.length+' esercizi</span></div>').join('');
+    openModal('<button class="close" onclick="closeModal()">✕</button><h2>📊 Importazione Excel</h2><p class="muted">Ho trovato <b>'+ex+'</b> esercizi in <b>'+imported.length+'</b> schede ('+on+' ON, '+off+' OFF).</p><div class="import-preview">'+preview+'</div><hr><p class="muted small">Puoi sostituire le schede attuali oppure aggiungere quelle importate. I dati degli allenamenti già registrati non vengono cancellati.</p><div class="actions"><button class="secondary" onclick="closeModal()">Annulla</button><button onclick="applyImportedPlans('+JSON.stringify(imported).replace(/</g,'\\u003c')+',false)">Aggiungi</button><button class="primary" onclick="applyImportedPlans('+JSON.stringify(imported).replace(/</g,'\\u003c')+',true)">Sostituisci schede</button></div>');
+  }catch(e){console.error(e);toast('File Excel non valido')}
+  ev.target.value='';
+}
+function applyImportedPlans(imported,replaceAll){
+  if(replaceAll)state.plans=imported;else state.plans=[...state.plans,...imported];
+  state.planVersion=4;save();closeModal();renderHome();renderPlans();toast('Schede importate ✓');
+}
 function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-app-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);toast('Backup esportato')}
 function importData(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.plans||!x.logs)throw Error();state=x;save();renderHome();toast('Backup importato')}catch(e){toast('Backup non valido')}};r.readAsText(f)}
 window.addEventListener('resize',()=>{if(document.getElementById('home').classList.contains('active'))drawWeight()});
-if('serviceWorker' in navigator)window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=4');await reg.update()}catch(e){}});
+if('serviceWorker' in navigator)window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=5');await reg.update()}catch(e){}});
 renderHome();
 </script>
 </body>
