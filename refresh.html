@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GYM APP — Aggiornamento</title>
+<style>
+body{margin:0;min-height:100vh;background:#090b0f;color:#f4f7fb;font-family:system-ui,sans-serif;display:grid;place-items:center;text-align:center}
+main{max-width:520px;padding:32px}h1{font-size:28px}p{color:#929baa}button{border:0;border-radius:14px;padding:14px 20px;background:#7c5cff;color:#fff;font-weight:800;font-size:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>Aggiornamento GYM APP</h1>
+<p>Sto rimuovendo la vecchia cache e caricando la versione aggiornata.</p>
+<button onclick="refreshApp()">Aggiorna ora</button>
+</main>
+<script>
+async function refreshApp(){
+  try{
+    const regs=await navigator.serviceWorker?.getRegistrations?.()||[];
+    await Promise.all(regs.map(r=>r.unregister()));
+    const keys=await caches?.keys?.()||[];
+    await Promise.all(keys.map(k=>caches.delete(k)));
+  }catch(e){}
+  location.replace('./index.html?fresh='+Date.now());
+}
+window.addEventListener('load',()=>setTimeout(refreshApp,500));
+</script>
+</body>
+</html>
