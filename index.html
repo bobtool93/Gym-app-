@@ -43,100 +43,29 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 <body>
 <div class="app">
 <header><div class="brand">GYM <span>APP</span><div class="small muted">2.0 • il tuo training log</div></div><button class="iconbtn" onclick="openSettings()">⚙️</button></header>
-
 <main>
 <section id="home" class="section active">
 <div class="card hero"><div class="eyebrow">Oggi</div><div class="title" id="homeTitle">Pronto ad allenarti?</div><div class="muted" id="homeSub">Carica la sessione e inizia a registrare.</div><div class="actions" style="margin-top:16px"><button class="primary" onclick="startToday()">▶ Inizia allenamento</button><button onclick="showSection('plans')">Modifica scheda</button></div></div>
-<div class="grid3">
-<div class="stat"><b id="streak">0</b><span>giorni streak</span></div><div class="stat"><b id="workouts">0</b><span>allenamenti</span></div><div class="stat"><b id="prs">0</b><span>PR</span></div>
-</div>
+<div class="grid3"><div class="stat"><b id="streak">0</b><span>giorni streak</span></div><div class="stat"><b id="workouts">0</b><span>allenamenti</span></div><div class="stat"><b id="prs">0</b><span>PR</span></div></div>
 <div class="card"><div class="row between"><div><div class="eyebrow">Peso corporeo</div><div class="kpi" id="bodyWeight">71.5 kg</div></div><button onclick="openWeight()">＋ Peso</button></div><canvas id="weightChart" class="chart"></canvas></div>
-<div class="card"><div class="row between"><h3 style="margin:0">Prossima sessione</h3><span class="chip accent" id="nextChip">Giorno 1</span></div><p class="muted" id="nextText"></p></div>
+<div class="card"><div class="row between"><h3 style="margin:0">Prossima sessione</h3><span class="chip accent" id="nextChip">DAY ON</span></div><p class="muted" id="nextText"></p></div>
 </section>
-
-<section id="workout" class="section">
-<div class="row between"><div><div class="eyebrow">Sessione</div><div class="title" id="workoutTitle">Allenamento</div></div><button onclick="finishWorkout()">✓ Fine</button></div>
-<div class="card"><div class="row between"><span class="muted" id="sessionMeta"></span><button onclick="startTimer(90)">⏱ Recupero</button></div><div class="progress" style="margin-top:12px"><i id="sessionProgress" style="width:0%"></i></div></div>
-<div id="workoutList" class="list"></div>
-</section>
-
-<section id="plans" class="section">
-<div class="row between"><div><div class="eyebrow">Programma</div><div class="title">Le tue schede</div></div><button onclick="openAddExercise()">＋ Esercizio</button></div>
-<div id="plansList"></div>
-<div class="card"><h3>Settimana</h3><div class="grid2"><div class="stat"><span>DAY ON</span><b>3</b><span>Lun • Mer • Ven</span></div><div class="stat"><span>DAY OFF</span><b>2</b><span>Mar • Gio</span></div></div><p class="muted small" style="margin-bottom:0">Sabato e domenica: riposo. Handstand solo nel DAY ON di venerdì. Muscle-up escluso dalla scheda.</p></div><div class="card"><h3>Principi di progressione</h3><p class="muted small">Doppia progressione: completa il range alto con tecnica pulita e RIR target, poi aumenta il carico. Per skill e tirate esplosive usa qualità e controllo, non cedimento.</p></div>
-</section>
-
-<section id="progress" class="section">
-<div class="title">Progressi</div>
-<div class="grid2"><div class="stat"><span>Volume totale</span><b id="volume">0 kg</b></div><div class="stat"><span>Sessioni questo mese</span><b id="monthSessions">0</b></div></div>
-<div class="card"><div class="row between"><h3 style="margin:0">PR recenti</h3><span class="chip" id="prCount">0</span></div><div id="prList" class="list" style="margin-top:10px"></div></div>
-<div class="card"><h3>Storico esercizi</h3><select id="historyExercise" onchange="renderHistory()"></select><canvas id="historyChart" class="chart" style="margin-top:10px"></canvas><div id="historyText" class="muted small" style="margin-top:10px"></div></div>
-</section>
-
-<section id="more" class="section">
-<div class="title">Altro</div>
-<div class="card"><div class="row between"><div><h3>🤸 Skill calisthenics</h3><div class="muted small">Muscle-up, front lever, dragon flag, verticale</div></div><button onclick="openSkills()">Apri</button></div></div>
-<div class="card"><div class="row between"><div><h3>🧘 Mobilità</h3><div class="muted small">Pre-workout e day-off</div></div><button onclick="openMobility()">Apri</button></div></div>
-<div class="card"><h3>Dati</h3><div class="actions"><button onclick="exportData()">Esporta backup</button><button onclick="document.getElementById('importFile').click()">Importa backup</button><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)"></div></div>
-<div class="card"><h3>Installazione</h3><p class="muted small">Questa è una PWA: dal browser puoi aggiungerla alla schermata Home. I dati restano sul dispositivo.</p></div>
-</section>
-</main>
-</div>
-
-<nav class="tabs">
-<button class="tab active" data-section="home" onclick="showSection('home')"><span class="ico">⌂</span>Oggi</button>
-<button class="tab" data-section="workout" onclick="showSection('workout')"><span class="ico">🏋️</span>Workout</button>
-<button class="tab" data-section="plans" onclick="showSection('plans')"><span class="ico">☷</span>Schede</button>
-<button class="tab" data-section="progress" onclick="showSection('progress')"><span class="ico">↗</span>Progressi</button>
-<button class="tab" data-section="more" onclick="showSection('more')"><span class="ico">•••</span>Altro</button>
-</nav>
-
+<section id="workout" class="section"><div class="row between"><div><div class="eyebrow">Sessione</div><div class="title" id="workoutTitle">Allenamento</div></div><button onclick="finishWorkout()">✓ Fine</button></div><div class="card"><div class="row between"><span class="muted" id="sessionMeta"></span><button onclick="startTimer(90)">⏱ Recupero</button></div><div class="progress" style="margin-top:12px"><i id="sessionProgress" style="width:0%"></i></div></div><div id="workoutList" class="list"></div></section>
+<section id="plans" class="section"><div class="row between"><div><div class="eyebrow">Programma</div><div class="title">Le tue schede</div></div><button onclick="openAddExercise()">＋ Esercizio</button></div><div id="plansList"></div><div class="card"><h3>Settimana</h3><div class="grid2"><div class="stat"><span>DAY ON</span><b>3</b><span>Lun • Mer • Ven</span></div><div class="stat"><span>DAY OFF</span><b>2</b><span>Mar • Gio</span></div></div><p class="muted small" style="margin-bottom:0">Sabato e domenica: riposo. Handstand solo nel DAY ON di venerdì. Muscle-up escluso dalla scheda.</p></div><div class="card"><h3>Principi di progressione</h3><p class="muted small">Doppia progressione: completa il range alto con tecnica pulita e RIR target, poi aumenta il carico. Per skill e tirate esplosive usa qualità e controllo, non cedimento.</p></div></section>
+<section id="progress" class="section"><div class="title">Progressi</div><div class="grid2"><div class="stat"><span>Volume totale</span><b id="volume">0 kg</b></div><div class="stat"><span>Sessioni questo mese</span><b id="monthSessions">0</b></div></div><div class="card"><div class="row between"><h3 style="margin:0">PR recenti</h3><span class="chip" id="prCount">0</span></div><div id="prList" class="list" style="margin-top:10px"></div></div><div class="card"><h3>Storico esercizi</h3><select id="historyExercise" onchange="renderHistory()"></select><canvas id="historyChart" class="chart" style="margin-top:10px"></canvas><div id="historyText" class="muted small" style="margin-top:10px"></div></div></section>
+<section id="more" class="section"><div class="title">Altro</div><div class="card"><div class="row between"><div><h3>🤸 Skill calisthenics</h3><div class="muted small">Muscle-up, front lever, dragon flag, verticale</div></div><button onclick="openSkills()">Apri</button></div></div><div class="card"><div class="row between"><div><h3>🧘 Mobilità</h3><div class="muted small">Pre-workout e day-off</div></div><button onclick="openMobility()">Apri</button></div></div><div class="card"><h3>Dati</h3><div class="actions"><button onclick="exportData()">Esporta backup</button><button onclick="document.getElementById('importFile').click()">Importa backup</button><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)"></div></div><div class="card"><h3>Installazione</h3><p class="muted small">Questa è una PWA: dal browser puoi aggiungerla alla schermata Home. I dati restano sul dispositivo.</p></div></section>
+</main></div>
+<nav class="tabs"><button class="tab active" data-section="home" onclick="showSection('home')"><span class="ico">⌂</span>Oggi</button><button class="tab" data-section="workout" onclick="showSection('workout')"><span class="ico">🏋️</span>Workout</button><button class="tab" data-section="plans" onclick="showSection('plans')"><span class="ico">☷</span>Schede</button><button class="tab" data-section="progress" onclick="showSection('progress')"><span class="ico">↗</span>Progressi</button><button class="tab" data-section="more" onclick="showSection('more')"><span class="ico">•••</span>Altro</button></nav>
 <div id="modal" class="modal" onclick="if(event.target.id==='modal')closeModal()"><div class="sheet" id="sheet"></div></div>
-<div id="timer" class="timerbar"><div class="timerbox"><div class="eyebrow">RECUPERO</div><div class="timer" id="timerValue">01:30</div><div class="actions"><button onclick="stopTimer()">Chiudi</button><button class="primary" onclick="addTimer(30)">+30s</button></div></div></div>
-<div id="toast" class="toast"></div>
-
+<div id="timer" class="timerbar"><div class="timerbox"><div class="eyebrow">RECUPERO</div><div class="timer" id="timerValue">01:30</div><div class="actions"><button onclick="stopTimer()">Chiudi</button><button class="primary" onclick="addTimer(30)">+30s</button></div></div></div><div id="toast" class="toast"></div>
 <script>
 const KEY='gymapp2_state';
-const defaultPlans=[
-{id:'mon-on',day:'LUN',mode:'ON',name:'A ON — Planche + Spinta + Gambe',focus:'Planche + spinta + gambe',exercises:[
-{id:'planche-hold',name:'Planche Hold / Progressione',sets:5,reps:'6–12s',rir:'',type:'skill'},
-{id:'planche-lean-pushup',name:'Planche Lean Push-up',sets:3,reps:'6–10',rir:'2',type:'strength'},
-{id:'weighted-dip',name:'Dip zavorrati',sets:4,reps:'5–8',rir:'1–2',type:'strength'},
-{id:'inclined-chest-press',name:'Inclined Chest Press',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'hack-squat-a',name:'Hack Squat',sets:3,reps:'6–10',rir:'1–2',type:'strength'},
-{id:'cable-triceps-a',name:'Tricipiti ai cavi',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},
-{id:'tue-off',day:'MAR',mode:'OFF',name:'OFF — Front Lever tecnico + Mobilità',focus:'Tecnica front lever + mobilità',exercises:[
-{id:'fl-easy',name:'Front Lever facile',sets:3,reps:'5–8s',rir:'',type:'skill'},
-{id:'fl-scap-pull',name:'Scapular Front Lever Pulls',sets:2,reps:'4–6',rir:'',type:'skill'},
-{id:'mob-shoulder-chest',name:'Mobilità spalle + torace',sets:1,reps:'5–7 min',rir:'',type:'mobility'}]},
-{id:'wed-on',day:'MER',mode:'ON',name:'B ON — Front Lever + Tirata + Bicipiti',focus:'Front lever + dorsali + schiena + bicipiti',exercises:[
-{id:'fl-progression',name:'Front Lever Progression',sets:5,reps:'6–12s',rir:'',type:'skill'},
-{id:'fl-raises',name:'Front Lever Raises',sets:3,reps:'3–6',rir:'2',type:'skill'},
-{id:'ice-cream-maker',name:'Ice Cream Maker',sets:3,reps:'5–8',rir:'2',type:'skill'},
-{id:'weighted-pullup-b',name:'Trazioni zavorrate',sets:4,reps:'5–8',rir:'1–2',load:12.5,type:'strength'},
-{id:'tbar-row',name:'T-Bar Row',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'ez-curl',name:'Curl EZ',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'ring-bench-curl',name:'Curl agli anelli / panca',sets:2,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},
-{id:'thu-off',day:'GIO',mode:'OFF',name:'OFF — Planche tecnica + Mobilità',focus:'Tecnica planche + mobilità',exercises:[
-{id:'planche-prog',name:'Planche Progression Hold',sets:3,reps:'6–10s',rir:'',type:'skill'},
-{id:'planche-lean',name:'Planche Lean',sets:2,reps:'15–20s',rir:'',type:'skill'},
-{id:'scap-protraction',name:'Scapular Protraction',sets:2,reps:'10',rir:'',type:'mobility'},
-{id:'mob-shoulder-wrist',name:'Mobilità spalle + polsi',sets:1,reps:'8–10 min',rir:'',type:'mobility'}]},
-{id:'fri-on',day:'VEN',mode:'ON',name:'C ON — Handstand + Gambe + Braccia',focus:'Handstand + gambe + braccia',exercises:[
-{id:'frog-handstand',name:'Frog-to-Handstand',sets:6,reps:'1–3 tentativi',rir:'3',type:'skill'},
-{id:'handstand',name:'Handstand',sets:3,reps:'20–40s',rir:'',type:'skill'},
-{id:'hspu-wall',name:'HSPU pancia al muro',sets:3,reps:'4–8',rir:'2',type:'strength'},
-{id:'hack-squat-c',name:'Hack Squat',sets:3,reps:'6–10',rir:'1–2',type:'strength'},
-{id:'leg-curl',name:'Leg Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'curl-c',name:'Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},
-{id:'cable-triceps-c',name:'Tricipiti ai cavi',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]}
-];const skills=[['Muscle-up','False grip / transizione','Negative controllate','Chest-to-bar','Singole assistite','Singole libere'],['Front lever','Tuck','Advanced tuck','One leg','Straddle','Full'],['Dragon flag','Tuck','Negative','One leg','Full'],['Verticale','Wall hold','Tuck kick-up','Free hold','Press prep']];
+const defaultPlans=[{id:'mon-on',day:'LUN',mode:'ON',name:'A ON — Planche + Spinta + Gambe',focus:'Planche + spinta + gambe',exercises:[{id:'planche-hold',name:'Planche Hold / Progressione',sets:5,reps:'6–12s',rir:'',type:'skill'},{id:'planche-lean-pushup',name:'Planche Lean Push-up',sets:3,reps:'6–10',rir:'2',type:'strength'},{id:'weighted-dip',name:'Dip zavorrati',sets:4,reps:'5–8',rir:'1–2',type:'strength'},{id:'inclined-chest-press',name:'Inclined Chest Press',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},{id:'hack-squat-a',name:'Hack Squat',sets:3,reps:'6–10',rir:'1–2',type:'strength'},{id:'cable-triceps-a',name:'Tricipiti ai cavi',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},{id:'tue-off',day:'MAR',mode:'OFF',name:'OFF — Front Lever tecnico + Mobilità',focus:'Tecnica front lever + mobilità',exercises:[{id:'fl-easy',name:'Front Lever facile',sets:3,reps:'5–8s',rir:'',type:'skill'},{id:'fl-scap-pull',name:'Scapular Front Lever Pulls',sets:2,reps:'4–6',rir:'',type:'skill'},{id:'mob-shoulder-chest',name:'Mobilità spalle + torace',sets:1,reps:'5–7 min',rir:'',type:'mobility'}]},{id:'wed-on',day:'MER',mode:'ON',name:'B ON — Front Lever + Tirata + Bicipiti',focus:'Front lever + dorsali + schiena + bicipiti',exercises:[{id:'fl-progression',name:'Front Lever Progression',sets:5,reps:'6–12s',rir:'',type:'skill'},{id:'fl-raises',name:'Front Lever Raises',sets:3,reps:'3–6',rir:'2',type:'skill'},{id:'ice-cream-maker',name:'Ice Cream Maker',sets:3,reps:'5–8',rir:'2',type:'skill'},{id:'weighted-pullup-b',name:'Trazioni zavorrate',sets:4,reps:'5–8',rir:'1–2',load:12.5,type:'strength'},{id:'tbar-row',name:'T-Bar Row',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},{id:'ez-curl',name:'Curl EZ',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},{id:'ring-bench-curl',name:'Curl agli anelli / panca',sets:2,reps:'10–15',rir:'1–2',type:'hypertrophy'}]},{id:'thu-off',day:'GIO',mode:'OFF',name:'OFF — Planche tecnica + Mobilità',focus:'Tecnica planche + mobilità',exercises:[{id:'planche-prog',name:'Planche Progression Hold',sets:3,reps:'6–10s',rir:'',type:'skill'},{id:'planche-lean',name:'Planche Lean',sets:2,reps:'15–20s',rir:'',type:'skill'},{id:'scap-protraction',name:'Scapular Protraction',sets:2,reps:'10',rir:'',type:'mobility'},{id:'mob-shoulder-wrist',name:'Mobilità spalle + polsi',sets:1,reps:'8–10 min',rir:'',type:'mobility'}]},{id:'fri-on',day:'VEN',mode:'ON',name:'C ON — Handstand + Gambe + Braccia',focus:'Handstand + gambe + braccia',exercises:[{id:'frog-handstand',name:'Frog-to-Handstand',sets:6,reps:'1–3 tentativi',rir:'3',type:'skill'},{id:'handstand',name:'Handstand',sets:3,reps:'20–40s',rir:'',type:'skill'},{id:'hspu-wall',name:'HSPU pancia al muro',sets:3,reps:'4–8',rir:'2',type:'strength'},{id:'hack-squat-c',name:'Hack Squat',sets:3,reps:'6–10',rir:'1–2',type:'strength'},{id:'leg-curl',name:'Leg Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},{id:'curl-c',name:'Curl',sets:3,reps:'8–12',rir:'1–2',type:'hypertrophy'},{id:'cable-triceps-c',name:'Tricipiti ai cavi',sets:3,reps:'10–15',rir:'1–2',type:'hypertrophy'}]}];
+const skills=[['Muscle-up','False grip / transizione','Negative controllate','Chest-to-bar','Singole assistite','Singole libere'],['Front lever','Tuck','Advanced tuck','One leg','Straddle','Full'],['Dragon flag','Tuck','Negative','One leg','Full'],['Verticale','Wall hold','Tuck kick-up','Free hold','Press prep']];
 const mobilityPre=['Circonduzioni spalle 2×10','Scapular pull-up 2×8','Skin the cat controllato 2×5','Hollow body 2×20s','Squat pry 60s'];
 const mobilityOff=['Cat-cow 2×10','Rotazioni toraciche 2×8/lato','90/90 hip switches 2×10','Couch stretch 60s/lato','Dead hang 2×30s','Respirazione nasale 3 min'];
-
-let state=load(); let activePlan=0; let activeSession=null; let timerInt=null; let timerSec=90;
-
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.plans&&s.planVersion===3)return s;return {plans:defaultPlans,planVersion:3,logs:s?.logs||[],weights:s?.weights?.length?s.weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:s?.settings||{name:'Bob'}}}catch(e){return {plans:defaultPlans,planVersion:3,logs:[],weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:{name:'Bob'}}}}
+let state=load();let activePlan=0;let activeSession=null;let timerInt=null;let timerSec=90;
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.plans&&s.planVersion===3)return s;return{plans:defaultPlans,planVersion:3,logs:s?.logs||[],weights:s?.weights?.length?s.weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:s?.settings||{name:'Bob'}}}catch(e){return{plans:defaultPlans,planVersion:3,logs:[],weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:{name:'Bob'}}}}
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -149,7 +78,7 @@ function renderWorkout(){if(!activeSession){document.getElementById('workoutTitl
 function setVal(id,j,k,v){activeSession.sets[id][j][k]=k==='rir'?(v===''?'':Number(v)):Number(v)}
 function toggleSet(id,j){const s=activeSession.sets[id][j];s.done=!s.done;renderWorkout();if(s.done)startTimer(90)}
 function finishWorkout(){if(!activeSession)return;const p=state.plans.find(x=>x.id===activeSession.planId);const completed=Object.values(activeSession.sets).flat().filter(s=>s.done);if(!completed.length){toast('Completa almeno una serie');return}state.logs.push({id:activeSession.id,planId:p.id,date:new Date().toISOString(),sets:JSON.parse(JSON.stringify(activeSession.sets))});save();activeSession=null;toast('Allenamento salvato 💪');showSection('home')}
-function renderPlans(){const on=state.plans.filter(p=>p.mode!=='OFF'),off=state.plans.filter(p=>p.mode==='OFF');const block=(title,items,cls)=>'<div class="schedule-group '+cls+'"><div class="eyebrow" style="margin:20px 2px 8px">'+title+'</div>'+items.map(p=>{const i=state.plans.indexOf(p);return '<div class="card"><div class="row between"><div><div class="eyebrow">'+esc(p.day)+' • '+p.exercises.length+' esercizi</div><h3 style="margin:4px 0">'+esc(p.name)+'</h3><div class="muted small">'+esc(p.focus)+'</div></div><button class="'+(p.mode==='OFF'?'secondary':'primary')+'" onclick="startPlan('+i+')">'+(p.mode==='OFF'?'▶':'▶')+'</button></div><hr><div class="list">'+p.exercises.map((e,j)=>'<div class="row between"><div><b>'+esc(e.name)+'</b><div class="small muted">'+e.sets+'×'+esc(e.reps)+' • '+(e.rir?('RIR '+esc(e.rir)):'tecnica/mobilità')+'</div></div><button class="ghost" onclick="editExercise('+i+','+j+')">✎</button></div>').join('')+'</div></div>'}).join('')+'</div>';document.getElementById('plansList').innerHTML=block('DAY ON — Allenamento',on,'on-group')+block('DAY OFF — Tecnica / Mobilità',off,'off-group')}
+function renderPlans(){const on=state.plans.filter(p=>p.mode!=='OFF'),off=state.plans.filter(p=>p.mode==='OFF');const block=(title,items,cls)=>'<div class="schedule-group '+cls+'"><div class="eyebrow" style="margin:20px 2px 8px">'+title+'</div>'+items.map(p=>{const i=state.plans.indexOf(p);return '<div class="card"><div class="row between"><div><div class="eyebrow">'+esc(p.day)+' • '+p.exercises.length+' esercizi</div><h3 style="margin:4px 0">'+esc(p.name)+'</h3><div class="muted small">'+esc(p.focus)+'</div></div><button class="'+(p.mode==='OFF'?'secondary':'primary')+'" onclick="startPlan('+i+')">▶</button></div><hr><div class="list">'+p.exercises.map((e,j)=>'<div class="row between"><div><b>'+esc(e.name)+'</b><div class="small muted">'+e.sets+'×'+esc(e.reps)+' • '+(e.rir?('RIR '+esc(e.rir)):'tecnica/mobilità')+'</div></div><button class="ghost" onclick="editExercise('+i+','+j+')">✎</button></div>').join('')+'</div></div>'}).join('')+'</div>';document.getElementById('plansList').innerHTML=block('DAY ON — Allenamento',on,'on-group')+block('DAY OFF — Tecnica / Mobilità',off,'off-group')}
 function openAddExercise(){openModal('<button class="close" onclick="closeModal()">✕</button><h2>Aggiungi esercizio</h2><div class="form"><label class="field">Giorno<select id="newPlan">'+state.plans.map((p,i)=>'<option value="'+i+'">'+esc(p.name)+'</option>').join('')+'</select></label><label class="field">Nome<input id="newName" placeholder="Es. Lat Machine"></label><div class="grid2"><label class="field">Serie<input id="newSets" type="number" value="3"></label><label class="field">Reps<input id="newReps" value="8–12"></label></div><div class="grid2"><label class="field">RIR<input id="newRir" value="1–2"></label><label class="field">Carico iniziale<input id="newLoad" type="number" value="0"></label></div><label class="field">Categoria<select id="newType"><option>hypertrophy</option><option>strength</option><option>skill</option><option>accessory</option><option>core</option><option>power</option></select></label><button class="primary" onclick="addExercise()">Aggiungi</button></div>')}
 function addExercise(){const p=state.plans[Number(document.getElementById('newPlan').value)];p.exercises.push({id:uid(),name:document.getElementById('newName').value,sets:Number(document.getElementById('newSets').value),reps:document.getElementById('newReps').value,rir:document.getElementById('newRir').value,load:Number(document.getElementById('newLoad').value),type:document.getElementById('newType').value});save();closeModal();renderPlans();toast('Esercizio aggiunto')}
 function editExercise(pi,ei){const e=state.plans[pi].exercises[ei];openModal('<button class="close" onclick="closeModal()">✕</button><h2>Modifica esercizio</h2><div class="form"><label class="field">Nome<input id="edName" value="'+esc(e.name)+'"></label><div class="grid2"><label class="field">Serie<input id="edSets" type="number" value="'+e.sets+'"></label><label class="field">Reps<input id="edReps" value="'+esc(e.reps)+'"></label></div><div class="grid2"><label class="field">RIR<input id="edRir" value="'+esc(e.rir||'')+'"></label><label class="field">Carico<input id="edLoad" type="number" value="'+(e.load||0)+'"></label></div><div class="actions"><button class="primary" onclick="saveExercise('+pi+','+ei+')">Salva</button><button class="danger" onclick="deleteExercise('+pi+','+ei+')">Elimina</button></div></div>')}
@@ -178,7 +107,7 @@ function stopTimer(){clearInterval(timerInt);document.getElementById('timer').cl
 function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-app-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);toast('Backup esportato')}
 function importData(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.plans||!x.logs)throw Error();state=x;save();renderHome();toast('Backup importato')}catch(e){toast('Backup non valido')}};r.readAsText(f)}
 window.addEventListener('resize',()=>{if(document.getElementById('home').classList.contains('active'))drawWeight()});
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker' in navigator)window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=4');await reg.update()}catch(e){}});
 renderHome();
 </script>
 </body>
