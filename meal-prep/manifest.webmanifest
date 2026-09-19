@@ -1,0 +1,16 @@
+{
+  "name": "Meal Prep 75",
+  "short_name": "Meal Prep 75",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f4ee",
+  "theme_color": "#f6f4ee",
+  "lang": "it",
+  "icons": [
+    {
+      "src": "../icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
