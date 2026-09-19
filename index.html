@@ -68,7 +68,7 @@ const skills=[['Muscle-up','False grip / transizione','Negative controllate','Ch
 const mobilityPre=['Circonduzioni spalle 2×10','Scapular pull-up 2×8','Skin the cat controllato 2×5','Hollow body 2×20s','Squat pry 60s'];
 const mobilityOff=['Cat-cow 2×10','Rotazioni toraciche 2×8/lato','90/90 hip switches 2×10','Couch stretch 60s/lato','Dead hang 2×30s','Respirazione nasale 3 min'];
 let state=load();let activePlan=0;let activeSession=null;let timerInt=null;let timerSec=90;
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.plans&&s.planVersion===3)return s;return{plans:defaultPlans,planVersion:3,logs:s?.logs||[],weights:s?.weights?.length?s.weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:s?.settings||{name:'Bob'}}}catch(e){return{plans:defaultPlans,planVersion:3,logs:[],weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:{name:'Bob'}}}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.plans&&(s.planVersion===3||s.planVersion===4))return s;return{plans:defaultPlans,planVersion:3,logs:s?.logs||[],weights:s?.weights?.length?s.weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:s?.settings||{name:'Bob'}}}catch(e){return{plans:defaultPlans,planVersion:3,logs:[],weights:[{date:new Date().toISOString().slice(0,10),value:71.5}],settings:{name:'Bob'}}}}
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
