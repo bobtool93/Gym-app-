@@ -84,7 +84,7 @@ function updateExerciseNote(exerciseId,value){
 }
 function startRecoveryTimer(sec=90){
   const length=Math.max(1,Number(sec)||90);
-  const intent='intent:#Intent;action=android.intent.action.SET_TIMER;S.android.intent.extra.alarm.MESSAGE='+encodeURIComponent('Recupero Gym App')+';i.android.intent.extra.alarm.LENGTH='+length+';B.android.intent.extra.alarm.SKIP_UI=true;end';
+  const intent='intent:#Intent;action=android.intent.action.SET_TIMER;S.android.intent.extra.alarm.MESSAGE='+encodeURIComponent('Recupero Gym App')+';i.android.intent.extra.alarm.LENGTH='+length+';B.android.intent.extra.alarm.SKIP_UI=true;package=com.sec.android.app.clockpackage;end';
   if(/Android/i.test(navigator.userAgent)){
     let fallback=setTimeout(()=>startTimer(length),900);
     try{window.location.href=intent;setTimeout(()=>clearTimeout(fallback),1800)}
