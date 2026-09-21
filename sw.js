@@ -1,4 +1,4 @@
-const CACHE='gym-app-2-v5';
+const CACHE='gym-app-2-v6';
 const CORE=['./','./index.html','./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
