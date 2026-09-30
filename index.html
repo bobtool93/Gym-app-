@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0b0d10">
 <meta name="description" content="Gym App 2.0 - workout tracker, progressione, calisthenics e mobilità">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Gym App 2.0 • v9</title>
+<title>Gym App 2.0 • v10</title>
 <style>
 :root{--bg:#090b0f;--panel:#11151b;--panel2:#171c24;--line:#252c36;--text:#f4f7fb;--muted:#929baa;--accent:#7c5cff;--accent2:#9b86ff;--ok:#35d07f;--warn:#ffbf55;--danger:#ff5c69;--radius:18px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -290,7 +290,7 @@ function applyImportedPlans(imported,replaceAll){
 function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-app-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);toast('Backup esportato')}
 function importData(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.plans||!x.logs)throw Error();state=x;save();renderHome();toast('Backup importato')}catch(e){toast('Backup non valido')}};r.readAsText(f)}
 window.addEventListener('resize',()=>{if(document.getElementById('home').classList.contains('active'))drawWeight()});
-if('serviceWorker' in navigator)window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=9');await reg.update()}catch(e){}});
+if('serviceWorker' in navigator)window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=10');await reg.update()}catch(e){}});
 renderHome();
 </script>
 </body>
