@@ -69,14 +69,34 @@ function progressionFor(e){
   const avgReps=done.reduce((a,s)=>a+(Number(s.reps)||0),0)/done.length;
   const avgRir=done.reduce((a,s)=>a+(s.rir===''?1:Number(s.rir)||0),0)/done.length;
   const load=Math.max(...done.map(s=>Number(s.weight)||0));
-  if(e.type==='skill'||e.type==='mobility')return {text:'Mantieni la progressione tecnica. Aumenta il tempo/qualità solo se tutte le serie sono pulite.',tone:'skill'};
+  const prevSame=rows.filter(s=>Number(s.weight)===load);
+  const previousSame=prevSame.length?prevSame.slice(-done.length):[];
+  const prevAvg=previousSame.length?previousSame.reduce((a,s)=>a+(Number(s.reps)||0),0)/previousSame.length:null;
+  const repDelta=prevAvg==null?null:avgReps-prevAvg;
+  let comparison=repDelta==null?'':(' • A parità di '+load+' kg: '+(repDelta>0?'+':'')+repDelta.toFixed(1)+' reps vs sessione precedente');
+  if(e.type==='skill'||e.type==='mobility')return {text:'Mantieni la progressione tecnica. Aumenta tempo/qualità solo se tutte le serie sono pulite.'+comparison,tone:'skill'};
   if(range&&avgReps>=range.max){
     const step=load>=40?2.5:load>=20?1.25:0.5;
-    return {text:'Range alto raggiunto: prova +'+step+' kg mantenendo almeno '+range.min+' reps e RIR '+(e.rir||'1–2')+'.',tone:'up'};
+    return {text:'Range alto raggiunto: prova +'+step+' kg mantenendo almeno '+range.min+' reps e RIR '+(e.rir||'1–2')+'.'+comparison,tone:'up'};
   }
-  if(range&&avgReps<range.min)return {text:'Resta sul carico attuale e punta a '+range.min+' reps con tecnica pulita.',tone:'hold'};
-  if(avgRir<0.8)return {text:'Eri vicino al cedimento: mantieni il carico finché recuperi bene.',tone:'hold'};
-  return {text:'Mantieni il carico e prova ad aggiungere 1 rep per serie.',tone:'rep'};
+  if(range&&avgReps<range.min)return {text:'Resta sul carico attuale e punta a '+range.min+' reps con tecnica pulita.'+comparison,tone:'hold'};
+  if(avgRir<0.8)return {text:'Eri vicino al cedimento: mantieni il carico finché recuperi bene.'+comparison,tone:'hold'};
+  return {text:'Mantieni il carico e prova ad aggiungere 1 rep per serie.'+comparison,tone:'rep'};
+}
+function renderRepComparison(e){
+  const logs=state.logs.filter(l=>l.sets?.[e.id]?.some(s=>s.done));
+  if(logs.length<2)return '';
+  const last=logs.at(-1),prev=logs.at(-2);
+  const ls=(last.sets[e.id]||[]).filter(s=>s.done), ps=(prev.sets[e.id]||[]).filter(s=>s.done);
+  if(!ls.length||!ps.length)return '';
+  const parts=ls.map((s,k)=>{
+    const same=ps.find(x=>Number(x.weight)===Number(s.weight));
+    if(!same)return null;
+    const d=(Number(s.reps)||0)-(Number(same.reps)||0);
+    return (d>0?'+':'')+d+' rep @ '+Number(s.weight)+' kg';
+  }).filter(Boolean);
+  if(!parts.length)return '';
+  return '<div class="small" style="margin-top:7px;color:var(--ok)">📊 '+parts.join(' • ')+' vs sessione precedente</div>';
 }
 function smartRows(){
   const p=state.plans.find(x=>x.id===state.plans.filter(x=>x.mode!=='OFF')[Math.max(0,state.plans.filter(x=>x.mode!=='OFF').findIndex(x=>x.id===state.logs.at(-1)?.planId)+1)]?.id);
@@ -86,7 +106,7 @@ function renderSmartHome(){
   const el=document.getElementById('smartHome'); if(!el)return;
   const p=state.plans.find(x=>x.id===state.plans.filter(x=>x.mode!=='OFF')[(Math.max(0,state.plans.filter(x=>x.mode!=='OFF').findIndex(x=>x.id===state.logs.at(-1)?.planId)+1))%Math.max(1,state.plans.filter(x=>x.mode!=='OFF').length)]);
   if(!p){el.innerHTML='<div class="muted small">Completa una sessione per ricevere suggerimenti.</div>';return}
-  el.innerHTML=p.exercises.slice(0,5).map(e=>'<div class="suggest"><b>'+esc(e.name)+'</b><div class="small muted">'+esc(progressionFor(e).text)+'</div></div>').join('');
+  el.innerHTML=p.exercises.slice(0,5).map(e=>'<div class="suggest"><b>'+esc(e.name)+'</b><div class="small muted">'+esc(progressionFor(e).text)+'</div>'+renderRepComparison(e)+'</div>').join('');
 }
 function renderPerformanceLab(){
   const el=document.getElementById('performanceLabBody');if(!el)return;
